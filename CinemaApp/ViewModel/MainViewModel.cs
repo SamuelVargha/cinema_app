@@ -36,10 +36,16 @@ namespace CinemaApp.ViewModel
             }
         }
 
-        public ViewModelBase CurrentChildView {
+        public ViewModelBase CurrentChildView
+        {
             get => _currentChildView;
-            set => _currentChildView = value;
+            set
+            {
+                _currentChildView = value;
+                OnPropertyChanged(nameof(CurrentChildView));
+            }
         }
+
 
         public string Caption {
             get => _caption;
@@ -61,7 +67,10 @@ namespace CinemaApp.ViewModel
 
         // --> Commands
         public ICommand ShowHomeViewCommand { get; }
-        public ICommand ShowCustomerViewCommand { get; }
+        public ICommand ShowMovieViewCommand { get; }
+        public ICommand ShowScreeningViewCommand { get; }
+        public ICommand ShowReservationViewCommand { get; }
+        public ICommand ShowAboutViewCommand { get; }
 
         public MainViewModel()
         {
@@ -70,7 +79,10 @@ namespace CinemaApp.ViewModel
 
             // initialize commands
             ShowHomeViewCommand = new ViewModelCommand(ExecuteShowHomeViewCommand);
-            ShowCustomerViewCommand = new ViewModelCommand(ExecuteShowCustmoerViewCommand);
+            ShowMovieViewCommand = new ViewModelCommand(ExecuteShowMovieViewCommand);
+            ShowScreeningViewCommand = new ViewModelCommand(ExecuteShowScreeningViewCommand);
+            ShowReservationViewCommand = new ViewModelCommand(ExecuteReservationViewCommand);
+            ShowAboutViewCommand = new ViewModelCommand(ExecuteAboutViewCommand);
 
             //default view
             ExecuteShowHomeViewCommand(null);
@@ -78,18 +90,39 @@ namespace CinemaApp.ViewModel
             LoadCurrentUserData();
         }
 
-        private void ExecuteShowCustmoerViewCommand(object obj)
+        private void ExecuteShowMovieViewCommand(object obj)
         {
-            CurrentChildView = new CustomerViewModel();
-            Caption = "Customers";
-            Icon = IconChar.UserGroup;
+            CurrentChildView = new MovieViewModel();
+            Caption = "Movies";
+            Icon = IconChar.Film;
         }
 
         private void ExecuteShowHomeViewCommand(object obj)
         {
             CurrentChildView = new HomeViewModel();
-            Caption = "Dashboard";
+            Caption = "Home";
             Icon = IconChar.Home;
+        }
+
+        private void ExecuteShowScreeningViewCommand(object obj)
+        {
+            CurrentChildView = new HomeViewModel();
+            Caption = "Screenings";
+            Icon = IconChar.Tv;
+        }
+
+        private void ExecuteReservationViewCommand(object obj)
+        {
+            CurrentChildView = new HomeViewModel();
+            Caption = "Reservations";
+            Icon = IconChar.List;
+        }
+
+        private void ExecuteAboutViewCommand(object obj)
+        {
+            CurrentChildView = new HomeViewModel();
+            Caption = "About";
+            Icon = IconChar.Info;
         }
 
         private void LoadCurrentUserData()

@@ -22,8 +22,8 @@
             <local:HomeView/>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type viewModel:CustomerViewModel}">
-            <local:CustomerView/>
+        <DataTemplate DataType="{x:Type viewModel:MovieViewModel}">
+            <local:MovieView/>
         </DataTemplate>
     </Window.Resources>
     
@@ -88,7 +88,7 @@
 
                     <RadioButton Style="{StaticResource menuButton}"
                                  Tag="{StaticResource color2}"
-                                 Command="{Binding ShowCustomerViewCommand}">
+                                 Command="{Binding ShowMovieViewCommand}">
 
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Film" Style="{StaticResource menuButtonIcon}"/>
@@ -97,7 +97,9 @@
 
                     </RadioButton>
 
-                    <RadioButton Style="{StaticResource menuButton}" Tag="{StaticResource color1}">
+                    <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="{StaticResource color3}"
+                                 Command="{Binding ShowScreeningViewCommand}">
 
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Tv" Style="{StaticResource menuButtonIcon}"/>
@@ -106,7 +108,9 @@
 
                     </RadioButton>
 
-                    <RadioButton Style="{StaticResource menuButton}" Tag="{StaticResource color1}">
+                    <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="{StaticResource color4}"
+                                 Command="{Binding ShowReservationViewCommand}">
 
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="List" Style="{StaticResource menuButtonIcon}"/>
@@ -115,7 +119,9 @@
 
                     </RadioButton>
 
-                    <RadioButton Style="{StaticResource menuButton}" Tag="{StaticResource color1}">
+                    <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="{StaticResource color8}"
+                                 Command="{Binding ShowAboutViewCommand}">
 
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="info" Style="{StaticResource menuButtonIcon}"/>
@@ -222,11 +228,6 @@
                                     VerticalAlignment="Center"
                                     Margin="0,0,10,0">
 
-                            <Button Style="{StaticResource iconButton}"
-                                    Tag="{StaticResource color1}">
-                                <fa:IconImage Icon="AngleDown" Height="12" Width="12" Style="{StaticResource iconButtonIcon}"/>
-                            </Button>
-
                             <TextBlock Text="{Binding CurrentUserAccount.DisplayName}"
                                        Foreground="{StaticResource titleColor3}"
                                        FontSize="12"
@@ -241,22 +242,6 @@
                                 </Ellipse.Fill>
                                 
                             </Ellipse> -->
-
-                            <Button Style="{StaticResource iconButton}"
-                                    Tag="{StaticResource color3}">
-                                <fa:IconImage Icon="Clock" Style="{StaticResource iconButtonIcon}"/>
-                            </Button>
-
-                            <Button Style="{StaticResource iconButton}"
-                                    Tag="{StaticResource color4}">
-                                <fa:IconImage Icon="Envelope" Style="{StaticResource iconButtonIcon}"/>
-                            </Button>
-
-                            <Button Style="{StaticResource iconButton}"
-                                    Tag="{StaticResource color5}">
-                                <fa:IconImage Icon="Bell" Style="{StaticResource iconButtonIcon}"/>
-                            </Button>
-
 
 
                         </StackPanel>

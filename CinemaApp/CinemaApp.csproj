@@ -86,7 +86,8 @@
       <DependentUpon>BindablePasswordBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\IUserRepository.cs" />
-    <Compile Include="ViewModel\CustomerViewModel.cs" />
+    <Compile Include="Model\Movie.cs" />
+    <Compile Include="ViewModel\MovieViewModel.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Model\UserAccountModel.cs" />
@@ -96,8 +97,8 @@
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelCommand.cs" />
-    <Compile Include="View\CustomerView.xaml.cs">
-      <DependentUpon>CustomerView.xaml</DependentUpon>
+    <Compile Include="View\MovieView.xaml.cs">
+      <DependentUpon>MovieView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
@@ -132,7 +133,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\CustomerView.xaml">
+    <Page Include="View\MovieView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -172,6 +173,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Images\alex.jpg" />
+    <Resource Include="Images\fight_club.jpg" />
+    <Resource Include="Images\iron_man_2.jpg" />
+    <Resource Include="Images\revenant.jpeg" />
+    <Resource Include="Images\revenant.jpg" />
     <Resource Include="Resources\Noto\NotoSans-Bold.ttf" />
     <Resource Include="Resources\Noto\NotoSans-BoldItalic.ttf" />
     <Resource Include="Resources\Noto\NotoSans-Italic.ttf" />
@@ -198,12 +204,14 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Images\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="alex.jpg" />
+    <Resource Include="fight_club.jpg" />
+    <Resource Include="iron_man_2.jpg" />
     <Content Include="LoginDbEdit.sql" />
     <Content Include="LoginDb.sql" />
+    <Resource Include="revenant.jpeg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
