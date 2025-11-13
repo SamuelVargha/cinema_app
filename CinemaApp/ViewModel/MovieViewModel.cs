@@ -23,12 +23,13 @@ namespace CinemaApp.ViewModel
         {
             // Sample data (replace with DB or repo data later)
             Movies = new ObservableCollection<Movie>
-            {
-                new Movie { Title = "Iron Man 2", PosterPath = "/CinemaApp;component/Images/iron_man_2.jpg" },
-                new Movie { Title = "The Revenant", PosterPath = "/CinemaApp;component/Images/revenant.jpg" },
-                new Movie { Title = "Fight Club", PosterPath = "/CinemaApp;component/Images/fight_club.jpg" },
-                new Movie { Title = "Who Killed Captain Alex", PosterPath = "/CinemaApp;component/Images/alex.jpg" }
+{
+                new Movie { Title = "Iron Man 2", PosterPath = "/CinemaApp;component/Images/iron_man_2.jpg", Description = "Tony Stark faces new enemies and confronts his past as Iron Man." },
+                new Movie { Title = "The Revenant", PosterPath = "/CinemaApp;component/Images/revenant.jpg", Description = "A frontiersman fights for survival after being left for dead." },
+                new Movie { Title = "Fight Club", PosterPath = "/CinemaApp;component/Images/fight_club.jpg", Description = "An office worker forms an underground fight club with a soap maker." },
+                new Movie { Title = "Who Killed Captain Alex", PosterPath = "/CinemaApp;component/Images/alex.jpg", Description = "Ugandan action at its finest — Wakaliwood’s best!" }
             };
+
 
             SelectMovieCommand = new ViewModelCommand(ExecuteSelectMovie);
         }
@@ -37,8 +38,8 @@ namespace CinemaApp.ViewModel
         {
             if (parameter is Movie movie)
             {
-                // TODO: open details or show screenings
-                System.Windows.MessageBox.Show($"You clicked {movie.Title}");
+                var detailsWindow = new CinemaApp.View.MovieDetailsWindow(movie);
+                detailsWindow.ShowDialog();
             }
         }
     }
