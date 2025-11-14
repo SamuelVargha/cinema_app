@@ -5,9 +5,13 @@ namespace CinemaApp.View
 {
     public partial class MovieDetailsWindow : Window
     {
+
+        private Movie _movie;
+
         public MovieDetailsWindow(Movie movie)
         {
             InitializeComponent();
+            _movie = movie;
             DataContext = movie;
         }
 
@@ -18,9 +22,8 @@ namespace CinemaApp.View
 
         private void ViewScreenings_Click(object sender, RoutedEventArgs e)
         {
-            // In future: navigate to screening view
-            MessageBox.Show($"Navigating to screenings for {((Movie)DataContext).Title}",
-                            "CinemaApp", MessageBoxButton.OK, MessageBoxImage.Information);
+            var screeningsWindow = new ScreeningsWindow(_movie);
+            screeningsWindow.Show();
             this.Close();
         }
 

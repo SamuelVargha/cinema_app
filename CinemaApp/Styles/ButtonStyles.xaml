@@ -187,6 +187,40 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    
+    <!-- screening button style -->
+    <Style x:Key="ScreeningButtonStyle" TargetType="Button">
+
+        <Setter Property="Background" Value="#333"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="Margin" Value="0 0 0 10"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        
+        <!-- Default appearance -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                Padding="10">
+                        <ContentPresenter/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Hover trigger -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#7B5BFF"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <!-- Default background -->
+        <Setter Property="Background" Value="#333"/>
+    </Style>
+
 
 
 </ResourceDictionary>
