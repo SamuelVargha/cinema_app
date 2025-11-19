@@ -117,6 +117,9 @@
     <Compile Include="View\ScreeningsWindow.xaml.cs">
       <DependentUpon>ScreeningsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SeatSelectionWindow.xaml.cs">
+      <DependentUpon>SeatSelectionWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="CustomControls\BindablePasswordBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -162,6 +165,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ScreeningsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SeatSelectionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

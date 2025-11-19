@@ -12,5 +12,7 @@ namespace CinemaApp.Model
         public string Date { get; set; }
         public string Time { get; set; }
         public string Hall { get; set; }
+
+        public HashSet<int> ReservedSeats { get; set; } = new HashSet<int>();
     }
 }

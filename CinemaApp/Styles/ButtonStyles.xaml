@@ -221,6 +221,64 @@
         <Setter Property="Background" Value="#333"/>
     </Style>
 
+    <!-- Colors -->
+    <Color x:Key="SeatFreeColor">#666666</Color>
+    <Color x:Key="SeatHoverColor">#777777</Color>
+    <Color x:Key="SeatSelectedColor">#FF8800</Color>
+    <Color x:Key="SeatUnavailableColor">#CC0000</Color>
+
+    <!-- seat Button Template -->
+    <Style x:Key="SeatButtonStyle" TargetType="Button">
+        <Setter Property="Width" Value="45"/>
+        <Setter Property="Height" Value="45"/>
+        <Setter Property="Margin" Value="4"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Background" Value="{StaticResource SeatFreeColor}"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+
+                    <Border x:Name="seatBackground"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="8">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                    </Border>
+
+                    <!-- STATE TRIGGERS -->
+                    <ControlTemplate.Triggers>
+
+                        <!-- Hover -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="seatBackground" Property="Background"
+                                    Value="{StaticResource SeatHoverColor}"/>
+                        </Trigger>
+
+                        <!-- Disabled (unavailable) -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="seatBackground" Property="Background"
+                                    Value="{StaticResource SeatUnavailableColor}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+
+                        <!-- Selected -->
+                        <Trigger Property="Tag" Value="Selected">
+                            <Setter TargetName="seatBackground" Property="Background"
+                                    Value="{StaticResource SeatSelectedColor}"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
 
 
 </ResourceDictionary>

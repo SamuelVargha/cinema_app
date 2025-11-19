@@ -1,5 +1,6 @@
 ﻿using CinemaApp.Model;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace CinemaApp.View
@@ -17,13 +18,14 @@ namespace CinemaApp.View
 
         private void Screening_Click(object sender, RoutedEventArgs e)
         {
-            var screening = (sender as FrameworkElement)?.DataContext as Screening;
-            if (screening == null) return;
+            Button btn = (Button)sender;
+            Screening screening = (Screening)btn.DataContext;
 
-            //var seatWindow = new SeatReservationWindow(Movie, screening);
-            //seatWindow.Show();
+            SeatSelectionWindow win = new SeatSelectionWindow(screening);
             Close();
+            win.ShowDialog();
         }
+
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
