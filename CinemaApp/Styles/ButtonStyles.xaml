@@ -222,10 +222,11 @@
     </Style>
 
     <!-- Colors -->
-    <Color x:Key="SeatFreeColor">#666666</Color>
-    <Color x:Key="SeatHoverColor">#777777</Color>
-    <Color x:Key="SeatSelectedColor">#FF8800</Color>
-    <Color x:Key="SeatUnavailableColor">#CC0000</Color>
+    <SolidColorBrush x:Key="SeatFreeColor" Color="#666666"/>
+    <SolidColorBrush x:Key="SeatHoverColor" Color="#777777"/>
+    <SolidColorBrush x:Key="SeatSelectedColor" Color="#FF8800"/>
+    <SolidColorBrush x:Key="SeatUnavailableColor" Color="#64646b"/>
+
 
     <!-- seat Button Template -->
     <Style x:Key="SeatButtonStyle" TargetType="Button">
@@ -277,7 +278,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
 
 
 

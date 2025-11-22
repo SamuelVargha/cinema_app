@@ -87,6 +87,7 @@
     </Compile>
     <Compile Include="Model\IUserRepository.cs" />
     <Compile Include="Model\Movie.cs" />
+    <Compile Include="Model\RelayCommand.cs" />
     <Compile Include="Model\Screening.cs" />
     <Compile Include="ViewModel\MovieViewModel.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
@@ -113,6 +114,9 @@
     </Compile>
     <Compile Include="View\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ScreeningsView.xaml.cs">
+      <DependentUpon>ScreeningsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ScreeningsWindow.xaml.cs">
       <DependentUpon>ScreeningsWindow.xaml</DependentUpon>
@@ -161,6 +165,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ScreeningsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

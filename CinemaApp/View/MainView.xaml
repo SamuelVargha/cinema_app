@@ -25,6 +25,11 @@
         <DataTemplate DataType="{x:Type viewModel:MovieViewModel}">
             <local:MovieView/>
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:ScreeningsViewModel}">
+            <local:ScreeningsView/>
+        </DataTemplate>
+
     </Window.Resources>
     
     
@@ -74,21 +79,11 @@
                     </StackPanel>
                     
                     <!-- menu buttons -->
-                    <RadioButton Style="{StaticResource menuButton}"
-                                 Tag="{StaticResource color1}"
-                                 IsChecked="True"
-                                 Command="{Binding ShowHomeViewCommand}">
-
-                        <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Home" Style="{StaticResource menuButtonIcon}"/>
-                            <TextBlock Text="Home" Style="{StaticResource menuButtonText}"/>
-                        </StackPanel>
-                        
-                    </RadioButton>
 
                     <RadioButton Style="{StaticResource menuButton}"
                                  Tag="{StaticResource color2}"
-                                 Command="{Binding ShowMovieViewCommand}">
+                                 Command="{Binding ShowMovieViewCommand}"
+                                 IsChecked="true">
 
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Film" Style="{StaticResource menuButtonIcon}"/>
@@ -172,13 +167,6 @@
                                 Tag="{StaticResource color4}"
                                 Click="btnClose_Click">
                             <fa:IconImage Icon="Xmark" Style="{StaticResource controlButtonIcon}"/>
-                        </Button>
-
-                        <Button x:Name="btnMaximize"
-                                Style="{StaticResource controlButton}"
-                                Tag="{StaticResource color6}"
-                                Click="btnMaximize_Click">
-                            <fa:IconImage Icon="Square" Style="{StaticResource controlButtonIcon}"/>
                         </Button>
 
                         <Button x:Name="btnMinimize"

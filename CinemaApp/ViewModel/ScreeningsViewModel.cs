@@ -1,24 +1,49 @@
-﻿using CinemaApp.Model;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Input;
+using CinemaApp.Model;
+using CinemaApp.View;
 
 namespace CinemaApp.ViewModel
 {
     public class ScreeningsViewModel : ViewModelBase
     {
-        public string MovieTitle { get; }
-        public ObservableCollection<Screening> Screenings { get; }
+        public ObservableCollection<ScreeningDisplay> AllScreenings { get; set; }
 
-        public ScreeningsViewModel(string movieTitle)
+        public ICommand SelectScreeningCommand { get; set; }
+
+        public ScreeningsViewModel(IEnumerable<Movie> movies)
         {
-            MovieTitle = movieTitle;
+            // Flatten all screenings and sort by date/time
+            AllScreenings = new ObservableCollection<ScreeningDisplay>(
+                movies.SelectMany(m => m.Screenings.Select(s => new ScreeningDisplay
+                {
+                    MovieTitle = m.Title,
+                    Date = s.Date,
+                    Time = s.Time,
+                    Hall = s.Hall,
+                    OriginalScreening = s
+                }))
+                .OrderBy(s => DateTime.Parse(s.Date + " " + s.Time))
+            );
 
-            // TODO: Replace with your database screenings
-            Screenings = new ObservableCollection<Screening>
+            SelectScreeningCommand = new RelayCommand<ScreeningDisplay>(screening =>
             {
-                new Screening { MovieTitle = movieTitle, Date = "2025-03-01", Time = "18:30", Hall = "Hall 1" },
-                new Screening { MovieTitle = movieTitle, Date = "2025-03-01", Time = "21:00", Hall = "Hall 2" },
-                new Screening { MovieTitle = movieTitle, Date = "2025-03-02", Time = "17:00", Hall = "Hall 1" }
-            };
+                var win = new SeatSelectionWindow(screening.OriginalScreening);
+                win.Show();
+            });
         }
+    }
+
+    public class ScreeningDisplay
+    {
+        public string MovieTitle { get; set; }
+        public string Date { get; set; }
+        public string Time { get; set; }
+        public string Hall { get; set; }
+
+        public Screening OriginalScreening { get; set; }
     }
 }

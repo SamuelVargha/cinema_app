@@ -13,13 +13,18 @@ namespace CinemaApp.View
     {
         private Screening _screening;
 
-        // Selected seats
+        // Selected seats by user
         private HashSet<string> selectedSeats = new HashSet<string>();
 
         public SeatSelectionWindow(Screening screening)
         {
             InitializeComponent();
             _screening = screening;
+
+            // Ensure reserved seats list always exists
+            if (_screening.ReservedSeats == null)
+                _screening.ReservedSeats = new HashSet<string>();
+
             BuildSeats();
         }
 
@@ -35,7 +40,6 @@ namespace CinemaApp.View
 
         private void BuildSeats()
         {
-            SeatGrid.Items.Clear();
             SeatGrid.ItemsSource = null;
 
             int rows = _screening.Hall == "Hall 1" ? 5 : 3;
@@ -58,26 +62,35 @@ namespace CinemaApp.View
                 {
                     string seatId = rowLetter + c;
 
+                    bool isReserved = _screening.ReservedSeats.Contains(seatId);
+
                     Border seat = new Border
                     {
-                        Width = 38,
-                        Height = 38,
-                        CornerRadius = new CornerRadius(6),
-                        Background = new SolidColorBrush(Color.FromRgb(34, 34, 34)),
+                        Width = 40,
+                        Height = 40,
+                        CornerRadius = new CornerRadius(8),
+                        Background = new SolidColorBrush(
+                            isReserved ? Colors.Red : Color.FromRgb(61, 61, 64)
+                        ),
                         Margin = new Thickness(4),
                         Tag = seatId,
                         Child = new TextBlock
                         {
-                            Text = c.ToString(),
+                            Text = seatId,
                             HorizontalAlignment = HorizontalAlignment.Center,
                             VerticalAlignment = VerticalAlignment.Center,
-                            Foreground = Brushes.White
+                            Foreground = Brushes.White,
+                            FontSize = 14,
+                            FontWeight = FontWeights.Bold
                         }
                     };
 
-                    seat.MouseLeftButtonDown += Seat_Click;
-                    seat.MouseEnter += Seat_HoverEnter;
-                    seat.MouseLeave += Seat_HoverLeave;
+                    if (!isReserved)
+                    {
+                        seat.MouseLeftButtonDown += Seat_Click;
+                        seat.MouseEnter += Seat_HoverEnter;
+                        seat.MouseLeave += Seat_HoverLeave;
+                    }
 
                     row.Children.Add(seat);
                 }
@@ -95,7 +108,7 @@ namespace CinemaApp.View
             if (selectedSeats.Contains((string)seat.Tag))
                 return;
 
-            AnimateSeat(seat, Colors.MediumSlateBlue, 1.05);
+            AnimateSeat(seat, Colors.MediumSlateBlue, 1.08);
         }
 
         private void Seat_HoverLeave(object sender, System.Windows.Input.MouseEventArgs e)
@@ -105,7 +118,7 @@ namespace CinemaApp.View
             if (selectedSeats.Contains((string)seat.Tag))
                 return;
 
-            AnimateSeat(seat, Color.FromRgb(34, 34, 34), 1.0);
+            AnimateSeat(seat, Color.FromRgb(61, 61, 64), 1.0);
         }
 
         private void Seat_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -121,7 +134,7 @@ namespace CinemaApp.View
             else
             {
                 selectedSeats.Add(id);
-                AnimateSeat(seat, Colors.Orange, 1.1);
+                AnimateSeat(seat, Colors.Orange, 1.12);
             }
         }
 
@@ -155,12 +168,19 @@ namespace CinemaApp.View
 
         private void Reserve_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Attach to user account later
-            MessageBox.Show("Reserved seats:\n" +
-                            string.Join(", ", selectedSeats),
-                            "Success",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Information);
+            // Save selected seats as reserved
+            foreach (var seat in selectedSeats)
+            {
+                if (!_screening.ReservedSeats.Contains(seat))
+                    _screening.ReservedSeats.Add(seat);
+            }
+
+            MessageBox.Show(
+                "Reserved seats:\n" + string.Join(", ", selectedSeats),
+                "Success",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information
+            );
 
             Close();
         }

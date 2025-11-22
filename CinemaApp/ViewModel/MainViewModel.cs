@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -19,6 +20,8 @@ namespace CinemaApp.ViewModel
         private ViewModelBase _currentChildView;
         private string _caption;
         private IconChar _icon;
+
+        private ObservableCollection<Movie> movies;
 
         private IUserRepository userRepository;
 
@@ -77,6 +80,61 @@ namespace CinemaApp.ViewModel
             userRepository = new UserRepository();
             CurrentUserAccount = new UserAccountModel();
 
+            movies = new ObservableCollection<Movie>
+            {
+                new Movie
+                {
+                    Title = "Iron Man 2",
+                    PosterPath = "/CinemaApp;component/Images/iron_man_2.jpg",
+                    Description = "Tony Stark faces growing pressure from the government, rivals, and his own declining health as he continues to operate as Iron Man, leading to new alliances and dangerous enemies.",
+                    Screenings = new List<Screening>
+                    {
+                        new Screening { Date = "2025-03-01", Time = "18:30", Hall = "Hall 1" },
+                        new Screening { Date = "2025-03-01", Time = "21:00", Hall = "Hall 2" },
+                    }
+                },
+
+                new Movie
+                {
+                    Title = "The Revenant",
+                    PosterPath = "/CinemaApp;component/Images/revenant.jpg",
+                    Description = "A frontiersman fights to survive in the brutal wilderness after being left for dead, pushing himself through extreme conditions driven by determination and resilience.",
+                    Screenings = new List<Screening>
+                    {
+                        new Screening { Date = "2025-03-02", Time = "17:00", Hall = "Hall 1" },
+                        new Screening { Date = "2025-03-03", Time = "20:30", Hall = "Hall 2" },
+                    }
+                },
+                new Movie
+                {
+                    Title = "Fight Club",
+                    PosterPath = "/CinemaApp;component/Images/fight_club.jpg",
+                    Description = "A disillusioned office worker forms an underground fight club with a mysterious stranger, unraveling into a dark exploration of identity, rebellion, and modern masculinity.",
+                    Screenings = new List<Screening>
+                    {
+                        new Screening { Date = "2025-03-02", Time = "17:00", Hall = "Hall 1" },
+                        new Screening { Date = "2025-03-03", Time = "20:30", Hall = "Hall 2" },
+                    }
+                },
+                new Movie
+                {
+                    Title = "Who Killed Captain Alex",
+                    PosterPath = "/CinemaApp;component/Images/alex.jpg",
+                    Description = "Uganda’s first action movie follows a chaotic mission to uncover the fate of a special forces commander, blending over-the-top action, humor, and the unforgettable commentary of VJ Emmie.",
+                    Screenings = new List<Screening>
+                    {
+                        new Screening { Date = "2025-03-02", Time = "17:00", Hall = "Hall 2" },
+                        new Screening { Date = "2025-03-03", Time = "20:30", Hall = "Hall 1" },
+                        new Screening { Date = "2025-03-02", Time = "17:00", Hall = "Hall 2" },
+                        new Screening { Date = "2025-03-03", Time = "20:30", Hall = "Hall 1" },
+                        new Screening { Date = "2025-03-02", Time = "17:00", Hall = "Hall 2" },
+                        new Screening { Date = "2025-03-03", Time = "20:30", Hall = "Hall 1" },
+                        new Screening { Date = "2025-03-02", Time = "17:00", Hall = "Hall 2" },
+                        new Screening { Date = "2025-03-03", Time = "20:30", Hall = "Hall 1" },
+                    }
+                }
+            };
+
             // initialize commands
             ShowHomeViewCommand = new ViewModelCommand(ExecuteShowHomeViewCommand);
             ShowMovieViewCommand = new ViewModelCommand(ExecuteShowMovieViewCommand);
@@ -85,14 +143,14 @@ namespace CinemaApp.ViewModel
             ShowAboutViewCommand = new ViewModelCommand(ExecuteAboutViewCommand);
 
             //default view
-            ExecuteShowHomeViewCommand(null);
+            ExecuteShowMovieViewCommand(null);
 
             LoadCurrentUserData();
         }
 
         private void ExecuteShowMovieViewCommand(object obj)
         {
-            CurrentChildView = new MovieViewModel();
+            CurrentChildView = new MovieViewModel(movies);
             Caption = "Movies";
             Icon = IconChar.Film;
         }
@@ -106,7 +164,7 @@ namespace CinemaApp.ViewModel
 
         private void ExecuteShowScreeningViewCommand(object obj)
         {
-            CurrentChildView = new HomeViewModel();
+            CurrentChildView = new ScreeningsViewModel(movies);
             Caption = "Screenings";
             Icon = IconChar.Tv;
         }
