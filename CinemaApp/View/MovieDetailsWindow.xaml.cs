@@ -7,10 +7,12 @@ namespace CinemaApp.View
     {
 
         private Movie _movie;
+        private UserAccountModel _userModel;
 
-        public MovieDetailsWindow(Movie movie)
+        public MovieDetailsWindow(UserAccountModel userModel, Movie movie)
         {
             InitializeComponent();
+            _userModel = userModel;
             _movie = movie;
             DataContext = movie;
         }
@@ -22,7 +24,7 @@ namespace CinemaApp.View
 
         private void ViewScreenings_Click(object sender, RoutedEventArgs e)
         {
-            var screeningsWindow = new ScreeningsWindow(_movie);
+            var screeningsWindow = new ScreeningsWindow(_userModel, _movie);
             screeningsWindow.Show();
             this.Close();
         }

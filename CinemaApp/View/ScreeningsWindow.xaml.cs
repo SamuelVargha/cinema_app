@@ -9,9 +9,12 @@ namespace CinemaApp.View
     {
         public Movie Movie { get; }
 
-        public ScreeningsWindow(Movie movie)
+        public UserAccountModel _userModel;
+
+        public ScreeningsWindow(UserAccountModel userModel, Movie movie)
         {
             InitializeComponent();
+            _userModel = userModel;
             Movie = movie;
             DataContext = movie;
         }
@@ -21,7 +24,7 @@ namespace CinemaApp.View
             Button btn = (Button)sender;
             Screening screening = (Screening)btn.DataContext;
 
-            SeatSelectionWindow win = new SeatSelectionWindow(screening);
+            SeatSelectionWindow win = new SeatSelectionWindow(_userModel, screening);
             Close();
             win.ShowDialog();
         }

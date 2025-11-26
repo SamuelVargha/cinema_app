@@ -30,6 +30,10 @@
             <local:ScreeningsView/>
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type viewModel:AboutViewModel}">
+            <local:AboutView/>
+        </DataTemplate>
+
     </Window.Resources>
     
     

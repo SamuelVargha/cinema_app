@@ -7,37 +7,104 @@
              d:DesignHeight="600"
              d:DesignWidth="1000">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <ItemsControl ItemsSource="{Binding AllScreenings}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button Command="{Binding DataContext.SelectScreeningCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                            CommandParameter="{Binding}"
-                            Margin="5"
-                            Padding="10"
-                            Background="#1F1F1F"
-                            BorderBrush="MediumSlateBlue"
-                            BorderThickness="2"
-                            Cursor="Hand">
+    <!-- Simple resources for row hover / pressed -->
+    <UserControl.Resources>
+        <Style x:Key="RowButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="6">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource SeatHoverColor}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#2C2C2C"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                        <StackPanel>
-                            <TextBlock Text="{Binding MovieTitle}" 
-                                       Foreground="White"
-                                       FontWeight="Bold"
-                                       FontSize="16"/>
-                            <TextBlock Text="{Binding Date}" 
-                                       Foreground="#CCCCCC"
-                                       FontSize="14"/>
-                            <TextBlock Text="{Binding Time}" 
-                                       Foreground="#AAAAFF"
-                                       FontSize="14"/>
-                            <TextBlock Text="{Binding Hall}" 
-                                       Foreground="#AAAAFF"
-                                       FontSize="14"/>
-                        </StackPanel>
-                    </Button>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </ScrollViewer>
+        <!-- header style -->
+        <Style x:Key="HeaderText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#CCCCCC"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+        <Style x:Key="CellText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- header -->
+            <RowDefinition Height="8"/>
+            <RowDefinition Height="*"/>
+            <!-- list -->
+        </Grid.RowDefinitions>
+
+        <!-- SIMPLE HEADER -->
+        <Grid Grid.Row="0" Margin="4,0,4,6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="140"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="120"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Date" Grid.Column="0" Style="{StaticResource HeaderText}"/>
+            <TextBlock Text="Time" Grid.Column="1" Style="{StaticResource HeaderText}"/>
+            <TextBlock Text="Movie" Grid.Column="2" Style="{StaticResource HeaderText}"/>
+            <TextBlock Text="Hall" Grid.Column="3" Style="{StaticResource HeaderText}" TextAlignment="Left"/>
+        </Grid>
+
+        <!-- SCROLLABLE LIST -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding AllScreenings}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <!-- whole row is a button so it's clickable -->
+                        <Button Style="{StaticResource RowButtonStyle}"
+                                Command="{Binding DataContext.SelectScreeningCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                CommandParameter="{Binding}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="140"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="120"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="{Binding Date}" Grid.Column="0" Style="{StaticResource CellText}"/>
+                                <TextBlock Text="{Binding Time}" Grid.Column="1" Style="{StaticResource CellText}"/>
+                                <TextBlock Text="{Binding MovieTitle}" Grid.Column="2" Style="{StaticResource CellText}" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Text="{Binding Hall}" Grid.Column="3" Style="{StaticResource CellText}"/>
+                            </Grid>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

@@ -20,6 +20,7 @@ namespace CinemaApp.ViewModel
         private ViewModelBase _currentChildView;
         private string _caption;
         private IconChar _icon;
+        private List<Reservation> reservations;
 
         private ObservableCollection<Movie> movies;
 
@@ -75,10 +76,16 @@ namespace CinemaApp.ViewModel
         public ICommand ShowReservationViewCommand { get; }
         public ICommand ShowAboutViewCommand { get; }
 
-        public MainViewModel()
+        public List<UserAccountModel> Users { get; set; }
+
+        public MainViewModel(List<UserAccountModel> users)
         {
             userRepository = new UserRepository();
             CurrentUserAccount = new UserAccountModel();
+
+            Users = users;
+
+            reservations = new List<Reservation>();
 
             movies = new ObservableCollection<Movie>
             {
@@ -89,8 +96,8 @@ namespace CinemaApp.ViewModel
                     Description = "Tony Stark faces growing pressure from the government, rivals, and his own declining health as he continues to operate as Iron Man, leading to new alliances and dangerous enemies.",
                     Screenings = new List<Screening>
                     {
-                        new Screening { Date = "2025-03-01", Time = "18:30", Hall = "Hall 1" },
-                        new Screening { Date = "2025-03-01", Time = "21:00", Hall = "Hall 2" },
+                        new Screening { MovieTitle = "Iron Man 2", Date = "2025-03-01", Time = "18:30", Hall = "Hall 1" },
+                        new Screening { MovieTitle = "Iron Man 2", Date = "2025-03-01", Time = "21:00", Hall = "Hall 2" },
                     }
                 },
 
@@ -101,8 +108,8 @@ namespace CinemaApp.ViewModel
                     Description = "A frontiersman fights to survive in the brutal wilderness after being left for dead, pushing himself through extreme conditions driven by determination and resilience.",
                     Screenings = new List<Screening>
                     {
-                        new Screening { Date = "2025-03-02", Time = "17:00", Hall = "Hall 1" },
-                        new Screening { Date = "2025-03-03", Time = "20:30", Hall = "Hall 2" },
+                        new Screening { MovieTitle="The Revenant", Date = "2025-03-02", Time = "17:00", Hall = "Hall 1" },
+                        new Screening { MovieTitle="The Revenant", Date = "2025-03-03", Time = "20:30", Hall = "Hall 2" },
                     }
                 },
                 new Movie
@@ -112,8 +119,8 @@ namespace CinemaApp.ViewModel
                     Description = "A disillusioned office worker forms an underground fight club with a mysterious stranger, unraveling into a dark exploration of identity, rebellion, and modern masculinity.",
                     Screenings = new List<Screening>
                     {
-                        new Screening { Date = "2025-03-02", Time = "17:00", Hall = "Hall 1" },
-                        new Screening { Date = "2025-03-03", Time = "20:30", Hall = "Hall 2" },
+                        new Screening { MovieTitle = "Fight Club", Date = "2025-03-02", Time = "17:00", Hall = "Hall 1" },
+                        new Screening { MovieTitle = "Fight Club", Date = "2025-03-03", Time = "20:30", Hall = "Hall 2" },
                     }
                 },
                 new Movie
@@ -123,14 +130,14 @@ namespace CinemaApp.ViewModel
                     Description = "Uganda’s first action movie follows a chaotic mission to uncover the fate of a special forces commander, blending over-the-top action, humor, and the unforgettable commentary of VJ Emmie.",
                     Screenings = new List<Screening>
                     {
-                        new Screening { Date = "2025-03-02", Time = "17:00", Hall = "Hall 2" },
-                        new Screening { Date = "2025-03-03", Time = "20:30", Hall = "Hall 1" },
-                        new Screening { Date = "2025-03-02", Time = "17:00", Hall = "Hall 2" },
-                        new Screening { Date = "2025-03-03", Time = "20:30", Hall = "Hall 1" },
-                        new Screening { Date = "2025-03-02", Time = "17:00", Hall = "Hall 2" },
-                        new Screening { Date = "2025-03-03", Time = "20:30", Hall = "Hall 1" },
-                        new Screening { Date = "2025-03-02", Time = "17:00", Hall = "Hall 2" },
-                        new Screening { Date = "2025-03-03", Time = "20:30", Hall = "Hall 1" },
+                        new Screening { MovieTitle = "Who Killed Captain Alex", Date = "2025-03-02", Time = "17:00", Hall = "Hall 2" },
+                        new Screening { MovieTitle = "Who Killed Captain Alex", Date = "2025-03-03", Time = "20:30", Hall = "Hall 1" },
+                        new Screening { MovieTitle = "Who Killed Captain Alex", Date = "2025-03-02", Time = "17:00", Hall = "Hall 2" },
+                        new Screening { MovieTitle = "Who Killed Captain Alex", Date = "2025-03-03", Time = "20:30", Hall = "Hall 1" },
+                        new Screening { MovieTitle = "Who Killed Captain Alex", Date = "2025-03-02", Time = "17:00", Hall = "Hall 2" },
+                        new Screening { MovieTitle = "Who Killed Captain Alex", Date = "2025-03-03", Time = "20:30", Hall = "Hall 1" },
+                        new Screening { MovieTitle = "Who Killed Captain Alex", Date = "2025-03-02", Time = "17:00", Hall = "Hall 2" },
+                        new Screening { MovieTitle = "Who Killed Captain Alex", Date = "2025-03-03", Time = "20:30", Hall = "Hall 1" },
                     }
                 }
             };
@@ -150,7 +157,7 @@ namespace CinemaApp.ViewModel
 
         private void ExecuteShowMovieViewCommand(object obj)
         {
-            CurrentChildView = new MovieViewModel(movies);
+            CurrentChildView = new MovieViewModel(new UserModel(), movies);
             Caption = "Movies";
             Icon = IconChar.Film;
         }
@@ -164,21 +171,21 @@ namespace CinemaApp.ViewModel
 
         private void ExecuteShowScreeningViewCommand(object obj)
         {
-            CurrentChildView = new ScreeningsViewModel(movies);
+            CurrentChildView = new ScreeningsViewModel(new UserModel(), movies);
             Caption = "Screenings";
             Icon = IconChar.Tv;
         }
 
         private void ExecuteReservationViewCommand(object obj)
         {
-            CurrentChildView = new HomeViewModel();
+            CurrentChildView = new ReservationsViewModel(new UserAccountModel(), new List<UserAccountModel>());
             Caption = "Reservations";
             Icon = IconChar.List;
         }
 
         private void ExecuteAboutViewCommand(object obj)
         {
-            CurrentChildView = new HomeViewModel();
+            CurrentChildView = new AboutViewModel();
             Caption = "About";
             Icon = IconChar.Info;
         }

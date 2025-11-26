@@ -8,6 +8,9 @@ namespace CinemaApp.ViewModel
     public class MovieViewModel : ViewModelBase
     {
         private ObservableCollection<Movie> _movies;
+
+        private UserModel _userModel;
+
         public ObservableCollection<Movie> Movies
         {
             get => _movies;
@@ -20,12 +23,13 @@ namespace CinemaApp.ViewModel
 
         public ICommand SelectMovieCommand { get; }
 
-        public MovieViewModel(ObservableCollection<Movie> movies)
+        public MovieViewModel(UserModel userModel, ObservableCollection<Movie> movies)
         {
             // Sample data (replace with DB or repo data later)
 
 
             _movies = movies;
+            _userModel = userModel;
             SelectMovieCommand = new ViewModelCommand(ExecuteSelectMovie);
         }
 
@@ -33,7 +37,7 @@ namespace CinemaApp.ViewModel
         {
             if (parameter is Movie movie)
             {
-                var detailsWindow = new CinemaApp.View.MovieDetailsWindow(movie);
+                var detailsWindow = new CinemaApp.View.MovieDetailsWindow(_userModel, movie);
                 detailsWindow.ShowDialog();
             }
         }

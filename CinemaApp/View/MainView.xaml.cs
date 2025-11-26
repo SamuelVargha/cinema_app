@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
+using CinemaApp.Model;
+using CinemaApp.ViewModel;
 
 namespace CinemaApp.View
 {
@@ -21,9 +23,10 @@ namespace CinemaApp.View
     /// </summary>
     public partial class MainView : Window
     {
-        public MainView()
+        public MainView(List<UserAccountModel> userAccounts)
         {
             InitializeComponent();
+            DataContext = new MainViewModel(userAccounts);
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
         }
 

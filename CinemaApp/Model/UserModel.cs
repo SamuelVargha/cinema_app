@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CinemaApp.Model
 {
-    class UserModel
+    public class UserModel
     {
         public string Id { get; set; }
         public string Username { get; set; }
@@ -14,5 +14,6 @@ namespace CinemaApp.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
+        public bool Admin { get; set; }
     }
 }

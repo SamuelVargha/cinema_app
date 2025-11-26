@@ -14,7 +14,9 @@ namespace CinemaApp.ViewModel
 
         public ICommand SelectScreeningCommand { get; set; }
 
-        public ScreeningsViewModel(IEnumerable<Movie> movies)
+        public UserAccountModel _userModel;
+
+        public ScreeningsViewModel(UserModel userModel, IEnumerable<Movie> movies)
         {
             // Flatten all screenings and sort by date/time
             AllScreenings = new ObservableCollection<ScreeningDisplay>(
@@ -31,7 +33,7 @@ namespace CinemaApp.ViewModel
 
             SelectScreeningCommand = new RelayCommand<ScreeningDisplay>(screening =>
             {
-                var win = new SeatSelectionWindow(screening.OriginalScreening);
+                var win = new SeatSelectionWindow(_userModel, screening.OriginalScreening);
                 win.Show();
             });
         }

@@ -1,0 +1,4 @@
+- fix up screenings tab
+- make reservations tab for admins/users
+- add cancelable orders for admins/users
+- make logout option

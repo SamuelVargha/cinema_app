@@ -279,6 +279,15 @@
         </Setter>
     </Style>
 
+    <!-- screening grid style -->
+    <Style x:Key="GridHeaderStyle" TargetType="GridViewColumnHeader">
+        <Setter Property="Background" Value="#1A1A1A"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Padding" Value="8"/>
+    </Style>
+
+
 
 
 </ResourceDictionary>

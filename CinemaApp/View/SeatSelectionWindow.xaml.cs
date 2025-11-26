@@ -12,14 +12,16 @@ namespace CinemaApp.View
     public partial class SeatSelectionWindow : Window
     {
         private Screening _screening;
+        private UserAccountModel _userModel;
 
         // Selected seats by user
         private HashSet<string> selectedSeats = new HashSet<string>();
 
-        public SeatSelectionWindow(Screening screening)
+        public SeatSelectionWindow(UserAccountModel userModel, Screening screening)
         {
             InitializeComponent();
             _screening = screening;
+            _userModel = userModel;
 
             // Ensure reserved seats list always exists
             if (_screening.ReservedSeats == null)
@@ -98,6 +100,18 @@ namespace CinemaApp.View
                 rowPanels.Add(row);
             }
 
+            int totalSeats = rows * cols;
+
+            if (totalSeats < 50)   // threshold you choose
+            {
+                SeatGrid.Margin = new Thickness(0, 80, 0, 0);
+            }
+            else
+            {
+                SeatGrid.Margin = new Thickness(0, 15, 0, 0);
+            }
+
+
             SeatGrid.ItemsSource = rowPanels;
         }
 
@@ -174,6 +188,15 @@ namespace CinemaApp.View
                 if (!_screening.ReservedSeats.Contains(seat))
                     _screening.ReservedSeats.Add(seat);
             }
+
+            var reservation = new Reservation
+            {
+                ID = Guid.NewGuid().ToString(),
+                Screening = _screening
+            };
+
+            _userModel.AddReservation(reservation);
+
 
             MessageBox.Show(
                 "Reserved seats:\n" + string.Join(", ", selectedSeats),

@@ -70,6 +70,7 @@ namespace CinemaApp.Repositories
                             FirstName = reader[3].ToString(),
                             LastName = reader[4].ToString(),
                             Email = reader[5].ToString(),
+                            Admin = reader[0].ToString().Equals("admin")
                         };
                     }
                 }
